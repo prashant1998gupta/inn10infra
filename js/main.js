@@ -72,11 +72,11 @@
     grid.innerHTML = list.length
       ? list.map(function (p) {
           var html = U.card(p);
-          if (state.sort === "near" && p.lat) html = html.replace('<p class="loc">', '<p class="dist">' + U.km(D.office, p).toFixed(1) + ' km from Inn10 office</p><p class="loc">');
+          if (state.sort === "near" && p.lat) html = html.replace('<p class="cfg">', '<p class="dist">' + U.km(D.office, p).toFixed(1) + ' km from Inn10 office</p><p class="cfg">');
           return html;
         }).join("")
       : '<p class="empty">No projects match your filters. <a href="#contact">Tell us your requirement</a> and we will find one for you.</p>';
-    $("#resultCount").innerHTML = "Showing <b>" + list.length + "</b> of " + D.projects.length + " projects";
+    $("#resultCount").innerHTML = "<b>" + list.length + "</b> of " + D.projects.length + " projects";
     $("#clearFilters").hidden = state.type === "all" && state.area === "all" && state.builder === "all" && !state.q;
     U.bindTilt($$(".tilt", grid));
     $$(".p-card", grid).forEach(function (c, k) { c.style.animationDelay = Math.min(k * 0.05, 0.4) + "s"; });
@@ -129,8 +129,8 @@
       '<img src="' + esc(list[0].image) + '" alt="' + esc(a) + '" loading="lazy" />' +
       '<div class="loc-body"><h3>' + esc(a) + "</h3><p>" + esc(AREA_INFO[a] || "") + "</p>" +
       '<div class="loc-meta"><span><b>' + list.length + "</b> Projects</span>" +
-      (res ? "<span>🏠 " + res + " Residential</span>" : "") + (com ? "<span>🏬 " + com + " Commercial</span>" : "") + "</div>" +
-      '<span class="loc-go">Explore →</span></div></button>';
+      (res ? "<span>" + res + " Residential</span>" : "") + (com ? "<span>" + com + " Commercial</span>" : "") + "</div>" +
+      '<span class="loc-go">Explore' + U.icon("arrow") + "</span></div></button>";
   }).join("");
   $("#locGrid").addEventListener("click", function (e) {
     var c = e.target.closest("[data-area]");
@@ -195,8 +195,8 @@
   function radius() { return Math.round((Math.min(window.innerWidth * 0.62, 320) / 2) / Math.tan(Math.PI / N)) + 30; }
   ring.innerHTML = featured.map(function (p) {
     return '<a class="c-item" href="' + U.url(p) + '" draggable="false"><img src="' + esc(p.image) + '" alt="' + esc(p.name) + '" draggable="false" />' +
-      '<button class="heart" data-short="' + p.slug + '" aria-label="Save">♥</button>' +
-      '<div class="c-cap"><b>' + esc(p.name) + "</b><span>" + esc(p.location) + "</span></div></a>";
+      '<button class="heart" data-short="' + p.slug + '" aria-label="Save ' + esc(p.name) + '">' + U.icon("heart") + "</button>" +
+      '<div class="c-cap"><small>' + esc(p.builder === "Others" ? "Premium" : p.builder) + "</small><b>" + esc(p.name) + "</b><span>" + esc(p.location) + "</span></div></a>";
   }).join("");
   var items = $$(".c-item", ring), angle = 0, auto = true;
   function applyRing() { ring.style.transform = "translateZ(" + -radius() + "px) rotateY(" + angle + "deg)"; }
@@ -205,7 +205,12 @@
     items.forEach(function (it, k) { it.style.transform = "rotateY(" + k * step + "deg) translateZ(" + R + "px)"; });
     applyRing();
   }
-  function spin(d) { angle += d; applyRing(); }
+  function spin(d) {
+    angle += d;
+    applyRing();
+    var idx = ((Math.round(-angle / step) % N) + N) % N;
+    $("#carCount").textContent = ("0" + (idx + 1)).slice(-2) + " / " + ("0" + N).slice(-2);
+  }
   placeItems();
   window.addEventListener("resize", placeItems);
   $("#carPrev").addEventListener("click", function () { auto = false; spin(step); });
@@ -234,15 +239,16 @@
     if (!b) return;
     var name = b.dataset.builder;
     if (BUILDERS.indexOf(name) >= 0) goFilter({ builder: name });
-    else { goFilter({}); U.toast("Projects by " + name + " – call 8700 190 507 for current inventory"); }
+    else { goFilter({}); U.toast(name + " inventory on request — call 8700 190 507"); }
   });
 
   /* ---------- Services: journey steps + fallback cards ---------- */
+  var SERVICE_ICONS = ["search", "shield", "chart", "layers"];
   $("#journeySteps").innerHTML = D.services.map(function (s, k) {
-    return '<div class="j-step" data-step="' + k + '"><span class="j-num">0' + (k + 1) + '</span><div><h3>' + s.icon + " " + esc(s.title) + "</h3><p>" + esc(s.text) + "</p></div></div>";
+    return '<div class="j-step" data-step="' + k + '"><span class="j-num">0' + (k + 1) + '</span><div><h3>' + esc(s.title) + "</h3><p>" + esc(s.text) + "</p></div></div>";
   }).join("");
   $("#serviceGrid").innerHTML = D.services.map(function (s, k) {
-    return '<div class="s-card tilt reveal"><span class="s-num">0' + (k + 1) + '</span><div class="s-icon">' + s.icon + "</div><h3>" + esc(s.title) + "</h3><p>" + esc(s.text) + "</p></div>";
+    return '<div class="s-card reveal"><div class="s-top"><span class="s-icon">' + U.icon(SERVICE_ICONS[k] || "check") + '</span><span class="s-num">0' + (k + 1) + "</span></div><h3>" + esc(s.title) + "</h3><p>" + esc(s.text) + "</p></div>";
   }).join("");
   U.bindTilt($$("#serviceGrid .tilt"));
 
@@ -260,7 +266,7 @@
   /* ---------- Testimonials ---------- */
   var tTrack = $("#testiTrack"), tDots = $("#testiDots"), tIdx = 0;
   tTrack.innerHTML = D.testimonials.map(function (t) {
-    return '<blockquote class="testi"><span class="quote">“</span><p>' + esc(t) + "</p><footer>★★★★★ <span>Happy Home Buyer</span></footer></blockquote>";
+    return '<blockquote class="testi"><span class="quote" aria-hidden="true">“</span><p>' + esc(t) + '</p><footer><span class="stars" aria-label="5 out of 5">★★★★★</span><span class="who">Happy Home Buyer · Delhi NCR</span></footer></blockquote>';
   }).join("");
   tDots.innerHTML = D.testimonials.map(function (_, k) { return '<button data-k="' + k + '" aria-label="Testimonial ' + (k + 1) + '"></button>'; }).join("");
   function showT(k) {

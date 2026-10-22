@@ -11,6 +11,48 @@
     return String(s).replace(/[&<>"']/g, function (m) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]; });
   });
   U.TYPE_LABEL = { residential: "Residential", commercial: "Commercial", office: "Office" };
+
+  /* ---------- Line-icon set (replaces emojis – identical on every device) ---------- */
+  var ICONS = {
+    phone: ["M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"],
+    whatsapp: ["M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.3z", "M9 8.2c.2-.5.6-.5.9-.5h.4c.2 0 .4 0 .5.4l.7 1.7c.1.2 0 .4-.1.6l-.5.6c.6 1.2 1.6 2.1 2.8 2.7l.6-.6c.2-.2.4-.2.6-.1l1.6.8c.3.1.3.3.3.5 0 .5-.3 1.3-1.1 1.5-.8.2-2.5 0-4.4-1.8S8.6 10 8.7 9z"],
+    mail: ["M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z", "M22 6l-10 7L2 6"],
+    pin: ["M12 22s-7-6.3-7-12a7 7 0 0 1 14 0c0 5.7-7 12-7 12z", "M12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"],
+    heart: ["M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"],
+    download: ["M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4", "M7 10l5 5 5-5", "M12 15V3"],
+    arrow: ["M5 12h14", "M13 6l6 6-6 6"],
+    arrowLeft: ["M19 12H5", "M11 6l-6 6 6 6"],
+    arrowUp: ["M12 19V5", "M6 11l6-6 6 6"],
+    share: ["M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7", "M16 6l-4-4-4 4", "M12 2v13"],
+    check: ["M20 6L9 17l-5-5"],
+    x: ["M18 6L6 18", "M6 6l12 12"],
+    search: ["M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16z", "M21 21l-4.3-4.3"],
+    building: ["M3 21h18", "M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16", "M9 7h1M14 7h1M9 11h1M14 11h1M9 15h1M14 15h1", "M10 21v-3h4v3"],
+    home: ["M3 10.5L12 3l9 7.5", "M5 9.5V21h14V9.5", "M10 21v-6h4v6"],
+    store: ["M3 9l1.5-5h15L21 9", "M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0", "M5 12v9h14v-9", "M10 21v-5h4v5"],
+    briefcase: ["M3 7h18v13H3z", "M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2", "M3 13h18"],
+    layers: ["M12 2l10 5-10 5L2 7z", "M2 12l10 5 10-5", "M2 17l10 5 10-5"],
+    map: ["M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z", "M9 4v14", "M15 6v14"],
+    file: ["M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z", "M14 2v6h6", "M8 13h8M8 17h5"],
+    compass: ["M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z", "M16 8l-2 6-6 2 2-6z"],
+    shield: ["M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z", "M9 12l2 2 4-4"],
+    chart: ["M3 3v18h18", "M7 15l4-4 3 3 6-6", "M16 8h4v4"],
+    calendar: ["M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z", "M16 2v4M8 2v4M3 10h18"],
+    play: ["M7 4l13 8-13 8z"],
+    message: ["M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"]
+  };
+  U.icon = function (name, cls) {
+    var p = ICONS[name] || [];
+    return '<svg class="ic' + (cls ? " " + cls : "") + '" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+      p.map(function (d) { return '<path d="' + d + '"/>'; }).join("") + "</svg>";
+  };
+  /* static markup uses <i data-i="name"></i> placeholders */
+  U.hydrateIcons = function (root) {
+    Array.prototype.forEach.call((root || document).querySelectorAll("i[data-i]"), function (el) {
+      el.outerHTML = U.icon(el.getAttribute("data-i"), el.className);
+    });
+  };
+  U.hydrateIcons(document);
   U.isHome = !!document.getElementById("home");
 
   /* ---------- Enrich project data ---------- */
@@ -69,10 +111,14 @@
   header.innerHTML =
     '<div class="container nav-wrap">' +
       '<a href="' + (U.isHome ? "#home" : "index.html") + '" class="logo"><img src="assets/images/logo-white.png" alt="Inn10 Infra" /></a>' +
-      '<nav id="nav">' + NAV.map(function (n) { return '<a href="' + link(n[0]) + '">' + n[1] + "</a>"; }).join("") + "</nav>" +
+      '<nav id="nav">' + NAV.map(function (n, k) { return '<a href="' + link(n[0]) + '"><small>0' + (k + 1) + "</small>" + n[1] + "</a>"; }).join("") +
+        '<div class="nav-extra"><a href="tel:+918700190507">' + U.icon("phone") + "8700 190 507</a>" +
+        '<a href="https://wa.me/' + D.company.whatsapp + '" target="_blank" rel="noopener">' + U.icon("whatsapp") + "WhatsApp</a>" +
+        '<a href="mailto:info@inn10infra.com">' + U.icon("mail") + "info@inn10infra.com</a></div>" +
+      "</nav>" +
       '<div class="nav-right">' +
-        '<button class="sl-btn" id="slBtn" aria-label="My shortlist" title="My shortlist">♥<span id="slCount">0</span></button>' +
-        '<a href="tel:+918700190507" class="btn btn-gold nav-cta">📞 8700 190 507</a>' +
+        '<button class="sl-btn" id="slBtn" aria-label="My shortlist" title="My shortlist">' + U.icon("heart") + '<span id="slCount">0</span></button>' +
+        '<a href="tel:+918700190507" class="btn btn-gold nav-cta">' + U.icon("phone") + "8700 190 507</a>" +
         '<button id="menuToggle" aria-label="Menu"><span></span><span></span><span></span></button>' +
       "</div>" +
     "</div>";
@@ -91,10 +137,17 @@
     "</div>" +
     '<div class="copyright">&copy;' + new Date().getFullYear() + ". All Rights Reserved by Inn10 Infra Projects LLP. " +
       '<span class="disclaimer">Project images, brochures &amp; map locations are indicative. Please verify details with RERA &amp; the developer before booking.</span></div></footer>' +
-    '<a class="float-btn wa" href="https://wa.me/' + D.company.whatsapp + '" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>' +
-    '<a class="float-btn call" href="tel:+918700190507" aria-label="Call">📞</a>' +
-    '<button class="float-btn top" id="toTop" aria-label="Back to top">↑</button>' +
-    '<aside class="drawer" id="drawer" aria-label="My shortlist"><div class="drawer-head"><h3>My Shortlist ♥</h3><button id="drawerClose" aria-label="Close">&times;</button></div>' +
+    '<a class="float-btn wa" href="https://wa.me/' + D.company.whatsapp + '" target="_blank" rel="noopener" aria-label="WhatsApp">' + U.icon("whatsapp") + "</a>" +
+    '<a class="float-btn call" href="tel:+918700190507" aria-label="Call">' + U.icon("phone") + "</a>" +
+    '<button class="float-btn top" id="toTop" aria-label="Back to top">' + U.icon("arrowUp") + "</button>" +
+    /* app-style bottom dock – phones only (CSS) */
+    '<nav class="m-dock" aria-label="Quick actions">' +
+      '<a href="tel:+918700190507">' + U.icon("phone") + "<span>Call</span></a>" +
+      '<a id="dockWa" href="https://wa.me/' + D.company.whatsapp + '" target="_blank" rel="noopener">' + U.icon("whatsapp") + "<span>WhatsApp</span></a>" +
+      '<a class="dock-main" href="' + (U.isHome ? "#contact" : document.getElementById("enquire") ? "#enquire" : "index.html#contact") + '">' + U.icon("calendar") + "<span>Site Visit</span></a>" +
+      '<button type="button" id="dockSaved">' + U.icon("heart") + '<span>Saved</span><em id="dockCount"></em></button>' +
+    "</nav>" +
+    '<aside class="drawer" id="drawer" aria-label="My shortlist"><div class="drawer-head"><h3>My Shortlist</h3><button id="drawerClose" aria-label="Close">' + U.icon("x") + "</button></div>" +
       '<div class="drawer-list" id="drawerList"></div>' +
       '<div class="drawer-foot"><button class="btn btn-gold" id="slEnquire">Enquire for all on WhatsApp</button><button class="btn-link" id="slClear">Clear shortlist</button></div></aside>' +
     '<div class="drawer-bg" id="drawerBg"></div>' +
@@ -138,23 +191,29 @@
     if (k >= 0) shortlist.splice(k, 1); else shortlist.push(slug);
     writeSL(shortlist);
     renderSL();
-    U.toast(k >= 0 ? "Removed from shortlist" : "♥ " + U.bySlug(slug).name + " saved to shortlist");
+    U.toast(k >= 0 ? "Removed from shortlist" : U.bySlug(slug).name + " saved to shortlist");
   };
   function renderSL() {
     $("#slCount").textContent = shortlist.length;
+    $("#dockCount").textContent = shortlist.length || "";
     $("#slBtn").classList.toggle("has", shortlist.length > 0);
     $("#drawerList").innerHTML = shortlist.length
       ? shortlist.map(function (s) {
           var p = U.bySlug(s);
-          return '<div class="dl-item"><img src="' + esc(p.image) + '" alt="" /><div><a href="' + U.url(p) + '"><b>' + esc(p.name) + "</b></a><span>" + esc(p.location) + '</span></div><button data-unshort="' + p.slug + '" aria-label="Remove">&times;</button></div>';
+          return '<div class="dl-item"><img src="' + esc(p.image) + '" alt="" /><div><a href="' + U.url(p) + '"><b>' + esc(p.name) + "</b></a><span>" + esc(p.location) + '</span></div><button data-unshort="' + p.slug + '" aria-label="Remove">' + U.icon("x") + "</button></div>";
         }).join("")
-      : '<p class="dl-empty">No saved projects yet.<br />Tap ♥ on any project to save it here.</p>';
-    $$("[data-short]").forEach(function (b) { b.classList.toggle("on", U.isShort(b.dataset.short)); });
+      : '<p class="dl-empty">' + U.icon("heart") + "No saved projects yet.<br />Tap the heart on any project to save it here.</p>";
+    $$("[data-short]").forEach(function (b) {
+      var on = U.isShort(b.dataset.short);
+      b.classList.toggle("on", on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
     $("#slEnquire").disabled = !shortlist.length;
   }
   U.renderSL = renderSL;
   function openDrawer(o) { document.body.classList.toggle("drawer-open", o); }
   $("#slBtn").addEventListener("click", function () { openDrawer(true); });
+  $("#dockSaved").addEventListener("click", function () { openDrawer(true); });
   $("#drawerClose").addEventListener("click", function () { openDrawer(false); });
   $("#drawerBg").addEventListener("click", function () { openDrawer(false); });
   $("#slClear").addEventListener("click", function () { shortlist = []; writeSL(shortlist); renderSL(); });
@@ -164,7 +223,7 @@
       "\nPlease share details & arrange a site visit.";
     window.open("https://wa.me/" + D.company.whatsapp + "?text=" + encodeURIComponent(txt), "_blank");
   });
-  /* capture phase so ♥ inside links/cards never triggers navigation */
+  /* capture phase so the heart button inside links/cards never triggers navigation */
   document.addEventListener("click", function (e) {
     var s = e.target.closest("[data-short]");
     if (s) { e.preventDefault(); e.stopPropagation(); U.toggleShort(s.dataset.short); return; }
@@ -224,24 +283,24 @@
   setTimeout(hidePreloader, 2500);
   /* ---------- Project card (listing style) ---------- */
   U.card = function (p) {
-    var tags = p.types.map(function (t) { return '<span class="tag tag-' + t + '">' + U.TYPE_LABEL[t] + "</span>"; }).join("");
+    var type = p.types.map(function (t) { return U.TYPE_LABEL[t]; }).join(" · ");
     var bro = p.brochure
-      ? '<a class="btn btn-gold btn-sm" href="' + esc(p.brochure) + '" target="_blank" rel="noopener">⬇ Brochure</a>'
-      : '<a class="btn btn-gold btn-sm" href="' + U.url(p) + '#enquire">Request Brochure</a>';
+      ? '<a class="pc-link" href="' + esc(p.brochure) + '" target="_blank" rel="noopener">' + U.icon("download") + "Brochure</a>"
+      : '<a class="pc-link" href="' + U.url(p) + '#enquire">' + U.icon("file") + "Request Brochure</a>";
     return (
       '<article class="p-card tilt">' +
-        '<a class="p-img" href="' + U.url(p) + '"><img src="' + esc(p.image) + '" alt="' + esc(p.name) + '" loading="lazy" />' +
-          '<span class="builder-badge">' + esc(p.builder === "Others" ? "Premium" : p.builder) + "</span>" +
-          '<div class="tags">' + tags + "</div>" +
-          '<span class="view-hint">View Details →</span>' +
+        '<a class="p-img" href="' + U.url(p) + '" aria-label="' + esc(p.name) + '"><img src="' + esc(p.image) + '" alt="' + esc(p.name) + '" loading="lazy" />' +
+          '<span class="pc-type">' + esc(type) + "</span>" +
         "</a>" +
-        '<button class="heart' + (U.isShort(p.slug) ? " on" : "") + '" data-short="' + p.slug + '" aria-label="Save to shortlist">♥</button>' +
+        '<button class="heart' + (U.isShort(p.slug) ? " on" : "") + '" data-short="' + p.slug + '" aria-label="Save ' + esc(p.name) + '">' + U.icon("heart") + "</button>" +
         '<div class="p-body">' +
-          '<a href="' + U.url(p) + '"><h3>' + esc(p.name) + "</h3></a>" +
+          '<p class="pc-builder">' + esc(p.builder === "Others" ? "Premium Project" : p.builder) + "</p>" +
+          '<a href="' + U.url(p) + '" class="pc-title"><h3>' + esc(p.name) + "</h3></a>" +
+          '<p class="loc">' + U.icon("pin") + esc(p.location) + "</p>" +
           '<p class="cfg">' + esc(p.config) + "</p>" +
-          '<p class="loc">📍 ' + esc(p.location) + "</p>" +
-          '<div class="p-actions">' + bro + '<a class="btn btn-outline btn-sm" href="' + U.url(p) + '">View Project</a></div>' +
-          '<a class="call-line" href="tel:+918700190507">📞 Free Site Visit: <b>8700 190 507</b></a>' +
+          '<div class="pc-foot">' + bro +
+            '<a class="pc-go" href="' + U.url(p) + '">View Details' + U.icon("arrow") + "</a>" +
+          "</div>" +
         "</div>" +
       "</article>"
     );
@@ -303,7 +362,7 @@
     });
   };
   U.popupHTML = function (p) {
-    return '<div class="map-pop"><img src="' + esc(p.image) + '" alt="" /><b>' + esc(p.name) + "</b><span>" + esc(p.config) + "</span><em>📍 " + esc(p.location) + '</em><a href="' + U.url(p) + '">View Project →</a></div>';
+    return '<div class="map-pop"><img src="' + esc(p.image) + '" alt="" /><b>' + esc(p.name) + "</b><span>" + esc(p.config) + "</span><em>" + esc(p.location) + '</em><a href="' + U.url(p) + '">View Project</a></div>';
   };
   U.makeMap = function (el, opts) {
     opts = opts || {};
@@ -328,7 +387,7 @@
     map.on("mouseout", function () { map.scrollWheelZoom.disable(); });
     var o = D.office;
     L.marker([o.lat, o.lng], { icon: U.pinIcon("office", opts.officeLabel ? "Inn10 Office" : ""), zIndexOffset: 1000 })
-      .addTo(map).bindPopup('<div class="map-pop"><b>' + esc(o.name) + "</b><em>" + esc(o.address) + '</em><a href="https://www.google.com/maps/dir/?api=1&destination=' + o.lat + "," + o.lng + '" target="_blank" rel="noopener">Get Directions →</a></div>');
+      .addTo(map).bindPopup('<div class="map-pop"><b>' + esc(o.name) + "</b><em>" + esc(o.address) + '</em><a href="https://www.google.com/maps/dir/?api=1&destination=' + o.lat + "," + o.lng + '" target="_blank" rel="noopener">Get Directions</a></div>');
     return map;
   };
 

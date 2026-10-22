@@ -17,14 +17,22 @@ Redesigned website for **Inn10 Infra Projects LLP** – trusted real estate advi
 - Enquiry forms send via **WhatsApp or e-mail** – no server needed
 - Fully **responsive** (320px phones → 4K), touch-friendly, print-friendly
 
+## Design
+
+- **Premium editorial look** – Cormorant Garamond headings + Manrope body, warm ivory / deep night palette with muted gold.
+- **Readable everywhere** – every text colour checked against WCAG AA contrast (4.5 : 1 body text, 3 : 1 large text).
+- **Line-icon set** (inline SVG) instead of emojis, so icons look identical on iPhone, Android and Windows.
+- **Mobile-first** – app-style bottom dock (Call · WhatsApp · Site Visit · Saved), full-screen menu, swipeable location & trust cards.
+
 ## Project structure
 
 ```
 index.html          Home page
 project.html        Project detail page (one template for all projects)
-css/style.css       Base theme (navy & gold)
+css/style.css       Base layout
 css/realestate.css  Portal features (search, map, EMI, project page …)
-css/responsive.css  Device-specific fixes – loaded last
+css/responsive.css  Device-specific fixes
+css/premium.css     ★ Premium design layer (colours, type, cards, mobile dock) – loaded last
 js/data.js          ★ ALL CONTENT: projects, builders, services, testimonials, map coordinates
 js/common.js        Shared header/footer, shortlist, map, EMI, forms
 js/main.js          Home page logic

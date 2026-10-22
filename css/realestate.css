@@ -250,7 +250,6 @@
 .pd-404 { min-height: 70vh; display: flex; align-items: center; text-align: center; padding-top: 8rem; }
 .pd-404 h1 { margin-bottom: 1rem; }
 .pd-404 p { margin-bottom: 2rem; }
-.m-bar { display: none; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1100px) {
@@ -287,11 +286,4 @@
   .pd-subnav { top: 62px; }
   .pdf-load { height: 300px; }
   .pd-map { height: 360px; }
-  .page-project .float-btn.wa, .page-project .float-btn.call { display: none; }
-  .page-project .float-btn.top { bottom: 80px; }
-  body.page-project #siteFooter { padding-bottom: 60px; }
-  .m-bar { display: grid; grid-template-columns: 1fr 1fr 1.2fr; position: fixed; left: 0; right: 0; bottom: 0; z-index: 95; background: var(--navy); border-top: 1px solid rgba(212, 175, 55, .4); }
-  .m-bar a { padding: 1rem .5rem; text-align: center; font-size: .88rem; font-weight: 600; color: #fff; }
-  .m-bar a + a { border-left: 1px solid rgba(255, 255, 255, .1); }
-  .m-bar .m-bar-gold { background: linear-gradient(135deg, var(--gold), var(--gold-2)); color: #1a1406; }
 }

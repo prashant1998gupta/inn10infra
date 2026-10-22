@@ -59,10 +59,10 @@ window.INN10 = {
   ],
 
   services: [
-    { icon: "🔍", title: "Property Selection", text: "Customised need based research on properties suiting your requirements followed by onsite visit, vetted developer accreditation & product evaluation." },
-    { icon: "🤝", title: "Transactional Assistance", text: "Cyclical transactional support involving Inventory Shortlisting, Negotiation, Legal advisory & Property registration assistance." },
-    { icon: "📈", title: "Investment Advisory", text: "Making investments and managing the same, appreciation of money, new entrants in market and emerging locations for investments." },
-    { icon: "💼", title: "Portfolio Management Services", text: "Property portfolio tracking, optimising timed entry exits, Advising research based portfolio analytics, Monitoring property performance & life-cycle." }
+    { title: "Property Selection", text: "Customised need based research on properties suiting your requirements followed by onsite visit, vetted developer accreditation & product evaluation." },
+    { title: "Transactional Assistance", text: "Cyclical transactional support involving Inventory Shortlisting, Negotiation, Legal advisory & Property registration assistance." },
+    { title: "Investment Advisory", text: "Making investments and managing the same, appreciation of money, new entrants in market and emerging locations for investments." },
+    { title: "Portfolio Management Services", text: "Property portfolio tracking, optimising timed entry exits, Advising research based portfolio analytics, Monitoring property performance & life-cycle." }
   ],
 
   testimonials: [

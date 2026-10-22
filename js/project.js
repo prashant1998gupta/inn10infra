@@ -31,17 +31,17 @@
   $("#pdBg").style.backgroundImage = "url('" + p.image + "')";
   $("#pdImg").src = p.image;
   $("#pdImg").alt = p.name;
-  $("#crumbs").innerHTML = '<a href="index.html">Home</a><span>›</span><a href="index.html?area=' + encodeURIComponent(p.area) + '#projects">' + esc(p.area) + "</a><span>›</span><b>" + esc(p.name) + "</b>";
+  $("#crumbs").innerHTML = '<a href="index.html">Home</a><span>/</span><a href="index.html?area=' + encodeURIComponent(p.area) + '#projects">' + esc(p.area) + "</a><span>/</span><b>" + esc(p.name) + "</b>";
   var logo = U.builderLogo(p.builder);
   $("#pdBuilder").innerHTML = (logo ? '<img src="' + esc(logo) + '" alt="' + esc(p.builder) + '" />' : "") + "<span>" + esc(builderName) + "</span>";
   $("#pdName").textContent = p.name;
   $("#pdName2").textContent = p.name;
-  $("#pdLoc").textContent = "📍 " + p.location;
-  $("#pdTags").innerHTML = p.types.map(function (t) { return '<span class="tag tag-' + t + '">' + U.TYPE_LABEL[t] + "</span>"; }).join("") + '<span class="tag tag-plain">' + esc(p.config) + "</span>";
+  $("#pdLoc").innerHTML = U.icon("pin") + esc(p.location);
+  $("#pdTags").innerHTML = p.types.map(function (t) { return '<span class="tag">' + U.TYPE_LABEL[t] + "</span>"; }).join("") + '<span class="tag tag-plain">' + esc(p.config) + "</span>";
 
   var bro = $("#pdBrochure");
   if (p.brochure) { bro.href = p.brochure; }
-  else { bro.href = "#enquire"; bro.removeAttribute("target"); bro.textContent = "Request Brochure"; }
+  else { bro.href = "#enquire"; bro.removeAttribute("target"); bro.querySelector("span").textContent = "Request Brochure"; }
 
   /* 3D tilt of hero image following the mouse */
   var vis = $("#pdVisual");
@@ -58,7 +58,7 @@
   $("#pdShare").addEventListener("click", function () {
     var data = { title: p.name + " | Inn10 Infra", text: p.name + " – " + p.config + ", " + p.location, url: location.href };
     if (navigator.share) { navigator.share(data).catch(function () {}); return; }
-    if (navigator.clipboard) navigator.clipboard.writeText(location.href).then(function () { U.toast("🔗 Link copied – share it on WhatsApp"); });
+    if (navigator.clipboard) navigator.clipboard.writeText(location.href).then(function () { U.toast("Link copied — share it on WhatsApp"); });
     else window.open("https://wa.me/?text=" + encodeURIComponent(data.text + " " + data.url), "_blank");
   });
   U.renderSL();
@@ -66,15 +66,15 @@
   /* ---------- Overview facts ---------- */
   var dist = p.lat ? U.km(D.office, p) : null;
   var facts = [
-    ["🏗", "Developer", builderName],
-    ["🏢", "Property Type", typeText],
-    ["📐", "Configuration", p.config],
-    ["📍", "Location", p.location],
-    ["🗺", "Micro-market", p.area],
-    ["📄", "Brochure", p.brochure ? "Available – download" : "On request"]
+    ["building", "Developer", builderName],
+    ["home", "Property Type", typeText],
+    ["layers", "Configuration", p.config],
+    ["pin", "Location", p.location],
+    ["map", "Micro-market", p.area],
+    ["file", "Brochure", p.brochure ? "Available" : "On request"]
   ];
   $("#pdFacts").innerHTML = facts.map(function (f) {
-    return '<div class="fact reveal"><span class="f-ico">' + f[0] + "</span><div><small>" + f[1] + "</small><b>" + esc(f[2]) + "</b></div></div>";
+    return '<div class="fact reveal"><span class="f-ico">' + U.icon(f[0]) + "</span><div><small>" + f[1] + "</small><b>" + esc(f[2]) + "</b></div></div>";
   }).join("");
   $("#pdDesc").textContent = p.name + (p.builder !== "Others" ? " by " + p.builder : "") + " offers " + p.config.toLowerCase() +
     " at " + p.location + ". Inn10 Infra provides customised need-based research, onsite visits, inventory shortlisting, negotiation, legal advisory and registration assistance for this project. Call 8700 190 507 for the latest price list and available inventory.";
@@ -82,10 +82,10 @@
   var box = $("#pdBrochureBox");
   if (p.brochure) {
     box.innerHTML =
-      '<div class="pdf-wrap"><div class="pdf-bar"><span>📄 ' + esc(p.name) + ' – Brochure</span><div>' +
-        '<a class="btn btn-sm btn-outline" href="' + esc(p.brochure) + '" target="_blank" rel="noopener">Open Full Screen</a> ' +
-        '<a class="btn btn-sm btn-gold" href="' + esc(p.brochure) + '" download>⬇ Download</a></div></div>' +
-      '<button class="pdf-load" id="pdfLoad"><img src="' + esc(p.image) + '" alt="" /><span>▶ View Brochure Here</span></button></div>';
+      '<div class="pdf-wrap"><div class="pdf-bar"><span class="pdf-name">' + U.icon("file") + esc(p.name) + " — Brochure</span><div class=\"pdf-actions\">" +
+        '<a class="btn btn-sm btn-outline-light" href="' + esc(p.brochure) + '" target="_blank" rel="noopener">Full Screen</a>' +
+        '<a class="btn btn-sm btn-gold" href="' + esc(p.brochure) + '" download>' + U.icon("download") + "Download</a></div></div>" +
+      '<button class="pdf-load" id="pdfLoad"><img src="' + esc(p.image) + '" alt="" /><span class="pdf-play">' + U.icon("play") + "View brochure here</span></button></div>";
     /* PDFs are large – only load the viewer when the user asks */
     $("#pdfLoad").addEventListener("click", function () {
       var f = document.createElement("iframe");
@@ -96,7 +96,7 @@
     });
   } else {
     box.innerHTML = '<div class="no-brochure"><p>The e-brochure for <b>' + esc(p.name) + "</b> is shared on request with the latest price list.</p>" +
-      '<a class="btn btn-gold" href="https://wa.me/' + D.company.whatsapp + "?text=" + encodeURIComponent("Hello Inn10 Infra, please share the brochure & price list of " + p.name + ".") + '" target="_blank" rel="noopener">💬 Get Brochure on WhatsApp</a></div>';
+      '<a class="btn btn-gold" href="https://wa.me/' + D.company.whatsapp + "?text=" + encodeURIComponent("Hello Inn10 Infra, please share the brochure & price list of " + p.name + ".") + '" target="_blank" rel="noopener">' + U.icon("whatsapp") + "Get Brochure on WhatsApp</a></div>";
   }
 
   /* ---------- Location map ---------- */
@@ -106,7 +106,7 @@
     var map = U.makeMap(mapEl, { officeLabel: true });
     if (map) {
       var m = L.marker([p.lat, p.lng], { icon: U.pinIcon("hero", p.name), zIndexOffset: 2000 }).addTo(map);
-      m.bindPopup(U.popupHTML(p).replace(/<a href="project\.html[^"]*">View Project →<\/a>/, ""));
+      m.bindPopup(U.popupHTML(p).replace(/<a href="project\.html[^"]*">View Project<\/a>/, ""));
       L.polyline([[D.office.lat, D.office.lng], [p.lat, p.lng]], { color: "#d4af37", weight: 2, dashArray: "6 8", opacity: 0.8 }).addTo(map);
       /* nearby Inn10 projects */
       D.projects.forEach(function (o) {
@@ -118,8 +118,8 @@
     }
     var q = encodeURIComponent(p.name + ", " + p.location);
     $("#pdMapActions").innerHTML =
-      '<a class="btn btn-outline btn-sm" href="https://www.google.com/maps/search/?api=1&query=' + q + '" target="_blank" rel="noopener">Open in Google Maps</a>' +
-      '<a class="btn btn-gold btn-sm" href="https://www.google.com/maps/dir/?api=1&destination=' + q + '" target="_blank" rel="noopener">🧭 Get Directions</a>';
+      '<a class="btn btn-outline btn-sm" href="https://www.google.com/maps/search/?api=1&query=' + q + '" target="_blank" rel="noopener">' + U.icon("map") + "Open in Google Maps</a>" +
+      '<a class="btn btn-gold btn-sm" href="https://www.google.com/maps/dir/?api=1&destination=' + q + '" target="_blank" rel="noopener">' + U.icon("compass") + "Get Directions</a>";
   } else {
     mapEl.style.display = "none";
   }
@@ -133,7 +133,9 @@
   var today = new Date();
   dateIn.min = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
   U.bindForm($("#pdForm"), function () { return p.name + " (" + p.location + ")"; });
-  $("#mBarWa").href = "https://wa.me/" + D.company.whatsapp + "?text=" + encodeURIComponent("Hello Inn10 Infra, I am interested in " + p.name + ", " + p.location + ". Please share details.");
+  /* bottom dock WhatsApp pre-filled with this project */
+  var dw = $("#dockWa");
+  if (dw) dw.href = "https://wa.me/" + D.company.whatsapp + "?text=" + encodeURIComponent("Hello Inn10 Infra, I am interested in " + p.name + ", " + p.location + ". Please share details.");
 
   /* ---------- Similar projects: same area or same type, nearest first ---------- */
   var sim = D.projects.filter(function (o) {

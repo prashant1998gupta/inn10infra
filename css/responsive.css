@@ -107,8 +107,6 @@ img, canvas, iframe { max-width: 100%; }
   .float-btn.wa { bottom: calc(150px + env(safe-area-inset-bottom)); }
   .float-btn.call { bottom: calc(88px + env(safe-area-inset-bottom)); }
   .float-btn.top { bottom: calc(26px + env(safe-area-inset-bottom)); }
-  .m-bar { padding-bottom: env(safe-area-inset-bottom); }
-  .page-project .float-btn.top { bottom: calc(80px + env(safe-area-inset-bottom)); }
   .heart { width: 44px; height: 44px; }
   .chip { padding: .6rem 1rem; min-height: 40px; }
   .pd-ctas .btn { flex: 1 1 calc(50% - .4rem); }
