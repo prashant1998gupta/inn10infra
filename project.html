@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Project | Inn10 Infra – Real Estate Advisor in Delhi/NCR</title>
+  <meta name="description" content="Project details, brochure, location map, EMI calculator and free site visit booking – Inn10 Infra Projects LLP." />
+  <link rel="icon" href="assets/images/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/realestate.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body class="page-project">
+
+  <main id="pd">
+    <!-- ===== Project hero ===== -->
+    <section class="pd-hero">
+      <div class="pd-bg" id="pdBg"></div>
+      <div class="container pd-hero-grid">
+        <div class="pd-intro">
+          <nav class="crumbs" id="crumbs"></nav>
+          <div class="pd-builder" id="pdBuilder"></div>
+          <h1 id="pdName"></h1>
+          <p class="pd-loc" id="pdLoc"></p>
+          <div class="pd-tags" id="pdTags"></div>
+          <div class="pd-ctas">
+            <a class="btn btn-gold" id="pdBrochure" target="_blank" rel="noopener">⬇ Download Brochure</a>
+            <a class="btn btn-outline" href="#enquire">Book Free Site Visit</a>
+            <button class="btn btn-ghost" id="pdShort">♥ Save</button>
+            <button class="btn btn-ghost" id="pdShare">↗ Share</button>
+          </div>
+        </div>
+        <div class="pd-visual" id="pdVisual">
+          <div class="pd-frame"><img id="pdImg" alt="" /></div>
+          <div class="pd-glow"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Sticky sub-nav ===== -->
+    <div class="pd-subnav" id="pdSubnav">
+      <div class="container">
+        <a href="#overview">Overview</a><a href="#brochure">Brochure</a><a href="#location">Location</a><a href="#pd-emi">EMI</a><a href="#enquire">Enquire</a>
+        <a class="sub-call" href="tel:+918700190507">📞 8700 190 507</a>
+      </div>
+    </div>
+
+    <!-- ===== Overview ===== -->
+    <section class="section" id="overview">
+      <div class="container pd-two">
+        <div>
+          <p class="eyebrow">Overview</p>
+          <h2>Project <span class="gold-text">Highlights</span></h2>
+          <div class="facts" id="pdFacts"></div>
+          <p class="pd-desc" id="pdDesc"></p>
+        </div>
+        <aside class="why">
+          <h3>Why book through Inn10 Infra?</h3>
+          <ul>
+            <li><b>Free site visit</b> – we arrange it at your convenience</li>
+            <li><b>Inventory shortlisting</b> &amp; price negotiation</li>
+            <li><b>Legal advisory</b> &amp; property registration assistance</li>
+            <li><b>Investment advisory</b> on emerging locations</li>
+            <li><b>Specialised services</b> for NRIs &amp; HNIs</li>
+          </ul>
+          <a class="btn btn-gold" href="#enquire">Talk to an Advisor</a>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ===== Brochure ===== -->
+    <section class="section dark" id="brochure">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">E-Brochure</p>
+          <h2>Project <span class="gold-text">Brochure</span></h2>
+        </div>
+        <div id="pdBrochureBox"></div>
+      </div>
+    </section>
+    <!-- ===== Location ===== -->
+    <section class="section" id="location">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Location</p>
+          <h2>Where It <span class="gold-text">Is</span></h2>
+          <p id="pdDist"></p>
+        </div>
+        <div class="pd-map" id="pdMap"></div>
+        <div class="pd-map-actions" id="pdMapActions"></div>
+      </div>
+    </section>
+
+    <!-- ===== EMI ===== -->
+    <section class="section dark" id="pd-emi">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Plan Your Purchase</p>
+          <h2>EMI <span class="gold-text">Calculator</span></h2>
+        </div>
+        <div id="pdEmi"></div>
+      </div>
+    </section>
+
+    <!-- ===== Enquire ===== -->
+    <section class="section" id="enquire">
+      <div class="container pd-enquire">
+        <div>
+          <p class="eyebrow">Free Site Visit</p>
+          <h2>Interested in <span class="gold-text" id="pdName2"></span>?</h2>
+          <p>Share your details – our advisor will call you with the latest price list, available units and offers.</p>
+          <div class="info-item"><span class="ico">📞</span><div><a href="tel:+918700190507">8700 190 507</a><br /><a href="tel:+919990913542">9990 913 542</a></div></div>
+          <div class="info-item"><span class="ico">✉️</span><div><a href="mailto:info@inn10infra.com">info@inn10infra.com</a></div></div>
+        </div>
+        <form class="contact-form glass" id="pdForm" novalidate>
+          <h3>Book Site Visit</h3>
+          <input type="text" name="name" placeholder="Your Name *" required />
+          <input type="tel" name="phone" placeholder="Mobile Number *" required />
+          <div class="form-row">
+            <input type="date" data-extra="Preferred visit date" aria-label="Preferred visit date" />
+            <select data-extra="Preferred time"><option value="">Preferred time</option><option>Morning (10–1)</option><option>Afternoon (1–4)</option><option>Evening (4–7)</option></select>
+          </div>
+          <textarea name="msg" rows="3" placeholder="Unit size / budget / any question…"></textarea>
+          <p class="form-msg"></p>
+          <div class="form-btns">
+            <button type="submit" class="btn btn-gold" data-via="whatsapp">Book on WhatsApp</button>
+            <button type="submit" class="btn btn-outline" data-via="email">Send Email</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===== Similar ===== -->
+    <section class="section dark" id="similar">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">You May Also Like</p>
+          <h2>Similar <span class="gold-text">Projects</span></h2>
+        </div>
+        <div class="project-grid" id="pdSimilar"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Mobile sticky action bar -->
+  <div class="m-bar"><a href="tel:+918700190507">📞 Call</a><a id="mBarWa" target="_blank" rel="noopener">💬 WhatsApp</a><a href="#enquire" class="m-bar-gold">Site Visit</a></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/project.js"></script>
+</body>
+</html>

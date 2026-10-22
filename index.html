@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Inn10 Infra | Real Estate Advisor in Delhi/NCR | 8700 190 507</title>
+  <meta name="description" content="Inn10 Infra Projects LLP – Trusted real estate advisor in Indirapuram, Noida, Noida Extension & Delhi NCR. Residential, commercial & office projects from top builders." />
+  <link rel="icon" href="assets/images/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/realestate.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+  <!-- ============ PRELOADER ============ -->
+  <div id="preloader">
+    <div class="loader-building"><span></span><span></span><span></span><span></span><span></span></div>
+    <p>INN10 INFRA</p>
+  </div>
+
+  <!-- Header, footer, floating buttons & shortlist drawer are injected by js/common.js -->
+
+  <!-- ============ HERO (3D CITY) ============ -->
+  <section id="home" class="hero">
+    <div class="hero-fallback" id="heroFallback"></div>
+    <canvas id="city3d"></canvas>
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <p class="eyebrow reveal">Indirapuram · Noida · Noida Extension · Delhi NCR</p>
+      <h1 class="reveal">Building <span class="gold-text">Trust</span>,<br />Delivering <span class="gold-text">Addresses</span>.</h1>
+      <p class="hero-sub reveal">Inn10 Infra – Trusted Real Estate Advisor in Noida, Delhi NCR. Personalised professional services hallmarked by quality, innovation and effectiveness.</p>
+      <!-- Property search bar -->
+      <form class="search-bar glass reveal" id="heroSearch">
+        <div class="sb-tabs" id="sbTabs">
+          <button type="button" class="on" data-t="all">All</button>
+          <button type="button" data-t="residential">Buy Home</button>
+          <button type="button" data-t="commercial">Retail / Shops</button>
+          <button type="button" data-t="office">Office Space</button>
+        </div>
+        <div class="sb-fields">
+          <label><span>📍 Location</span><select id="sbArea"><option value="all">All Locations</option></select></label>
+          <label><span>🏗 Builder</span><select id="sbBuilder"><option value="all">All Builders</option></select></label>
+          <label class="sb-q"><span>🔍 Keyword</span><input type="text" id="sbQ" placeholder="Project, sector, BHK…" /></label>
+          <button type="submit" class="btn btn-gold sb-go">Search <b id="sbCount"></b></button>
+        </div>
+      </form>
+      <div class="hero-stats reveal">
+        <div><strong class="counter" data-target="20">0</strong><span>+ Live Projects</span></div>
+        <div><strong class="counter" data-target="14">0</strong><span>+ Associated Builders</span></div>
+        <div><strong class="counter" data-target="4">0</strong><span>Core Services</span></div>
+      </div>
+    </div>
+    <a href="#featured" class="scroll-down" aria-label="Scroll down"><span></span></a>
+  </section>
+
+  <!-- ============ FEATURED 3D CAROUSEL ============ -->
+  <section id="featured" class="section dark">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Signature Collection</p>
+        <h2>Featured <span class="gold-text">Projects</span></h2>
+        <p>Drag, swipe or use the arrows to rotate the 3D showcase.</p>
+      </div>
+    </div>
+    <div class="carousel-stage"><div class="carousel-ring" id="carouselRing"></div></div>
+    <div class="carousel-nav">
+      <button id="carPrev" aria-label="Previous">&#8592;</button>
+      <button id="carNext" aria-label="Next">&#8594;</button>
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS ============ -->
+  <section id="projects" class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Portfolio</p>
+        <h2>Projects <span class="gold-text">Offered</span></h2>
+      </div>
+      <div class="filters">
+        <div class="filter-row" id="typeFilters">
+          <button class="chip active" data-type="all">All</button>
+          <button class="chip" data-type="residential">Residential</button>
+          <button class="chip" data-type="commercial">Commercial / Retail</button>
+          <button class="chip" data-type="office">Office Space</button>
+        </div>
+        <div class="filter-row">
+          <select id="areaFilter" aria-label="Location"><option value="all">All Locations</option></select>
+          <select id="builderFilter" aria-label="Builder"><option value="all">All Builders</option></select>
+          <select id="sortBy" aria-label="Sort">
+            <option value="default">Sort: Recommended</option>
+            <option value="az">Name A–Z</option>
+            <option value="near">Nearest to Inn10 Office</option>
+          </select>
+          <input type="text" id="searchBox" placeholder="Search project or location…" />
+        </div>
+      </div>
+      <div class="result-bar">
+        <p class="result-count" id="resultCount"></p>
+        <button class="btn-link" id="clearFilters" hidden>✕ Clear filters</button>
+      </div>
+      <div class="project-grid" id="projectGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============ LOCATIONS ============ -->
+  <section id="locations" class="section dark">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Explore by Location</p>
+        <h2>Where Do You Want to <span class="gold-text">Invest?</span></h2>
+      </div>
+      <div class="loc-grid" id="locGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============ MAP ============ -->
+  <section id="map" class="section map-section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Project Locator</p>
+        <h2>Every Project on the <span class="gold-text">Map</span></h2>
+        <p>Click a pin to preview a project. Gold pin = Inn10 Infra office, Indirapuram.</p>
+      </div>
+      <div class="map-layout">
+        <aside class="map-list" id="mapList"></aside>
+        <div class="map-canvas" id="mapCanvas"></div>
+      </div>
+    </div>
+  </section>
+  <!-- ============ BUILDERS ============ -->
+  <section id="builders" class="section dark">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Our Partners</p>
+        <h2>We are <span class="gold-text">Associated With</span></h2>
+        <p>Click any builder to see their projects.</p>
+      </div>
+    </div>
+    <div class="marquee"><div class="marquee-track" id="marqueeTrack"></div></div>
+  </section>
+
+  <!-- ============ SERVICES – scroll-built 3D tower ============ -->
+  <section id="services" class="journey">
+    <div class="journey-sticky">
+      <div class="container journey-grid">
+        <div class="journey-text">
+          <p class="eyebrow">What We Do · Your Journey With Inn10</p>
+          <h2>We Build Your <span class="gold-text">Investment</span>, Floor by Floor.</h2>
+          <div class="journey-steps" id="journeySteps"></div>
+          <div class="journey-progress"><span id="journeyBar"></span></div>
+        </div>
+        <div class="journey-3d"><canvas id="tower3d"></canvas><div class="journey-floor" id="journeyFloor">Floor 1 / 4</div></div>
+      </div>
+    </div>
+    <!-- Fallback/mobile list (also used by search engines) -->
+    <div class="container service-grid" id="serviceGrid"></div>
+  </section>
+
+  <!-- ============ EMI CALCULATOR ============ -->
+  <section id="emi" class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Plan Your Purchase</p>
+        <h2>Home Loan <span class="gold-text">EMI Calculator</span></h2>
+        <p>Slide to estimate your monthly payment. We also help you with loan assistance from leading banks.</p>
+      </div>
+      <div id="emiMount"></div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section id="about" class="section dark">
+    <div class="container about-wrap">
+      <div class="about-visual reveal" id="aboutVisual">
+        <div class="layer layer-back"></div>
+        <img src="assets/images/business/about.jpg" alt="About Inn10 Infra" class="layer layer-img" />
+        <div class="layer layer-badge"><strong>NCR</strong><span>Real Estate<br />Experts</span></div>
+      </div>
+      <div class="about-text reveal">
+        <p class="eyebrow">About Us</p>
+        <h2>About <span class="gold-text">Inn10 Infra Projects LLP</span></h2>
+        <p>Inn10 Infra Projects LLP is a real estate consultancy with extensive resources and ability to offer personalized professional services in Indirapuram, Noida, Noida Extension &amp; Delhi NCR. Our professionalism is hallmarked by quality, innovation and effectiveness, while delivered with enthusiasm and determination.</p>
+        <p>Empowered with the cutting edge knowledge of technology, trade trends and practices, our deals have inculcated confidence and genuine satisfaction amongst the real estate buyers. Our team of professionals believe in total commitment and ultimate satisfaction of their clients as they are adept in their fields of operations.</p>
+        <div class="more-text" id="moreText">
+          <p>Equipped with knowledge of present trends, laws and by laws of the industry we are able to meet the demands and specific requirements of the clients and channelizing their investments in the right direction. We also provide specialized services to high-net-worth individuals, NRIs, and institutional investors, apart from outcome-based real estate portfolio management services. In addition, Inn10 Infra provide consulting services such as project feasibility reports, marketing strategy, and product mix reports to real estate developers.</p>
+          <p>The Inn10 family believes in making clients happy, and this drives all our efforts. Simplified transactions, complete transparency, data-driven approach, and unflinching process rigor ensure that you associate Inn10 Infra with nothing but the best in real estate!</p>
+        </div>
+        <button class="btn btn-outline" id="readMore">Read More</button>
+        <ul class="pillars">
+          <li>✔ Complete Transparency</li>
+          <li>✔ Data-Driven Approach</li>
+          <li>✔ NRI &amp; HNI Services</li>
+          <li>✔ Legal &amp; Registration Support</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section id="testimonials" class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Testimonials</p>
+        <h2>What Our <span class="gold-text">Clients Say</span></h2>
+      </div>
+      <div class="testi-wrap">
+        <div class="testi-track" id="testiTrack"></div>
+        <div class="testi-dots" id="testiDots"></div>
+      </div>
+    </div>
+  </section>
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" class="section dark">
+    <div class="container contact-wrap">
+      <div class="contact-info reveal">
+        <p class="eyebrow">Get In Touch</p>
+        <h2>Call Us For a <span class="gold-text">Free Site Visit</span></h2>
+        <p>Tell us what you are looking for – we will shortlist the right property for you.</p>
+        <div class="info-item"><span class="ico">📞</span><div><a href="tel:+918700190507">8700 190 507</a><br /><a href="tel:+919990913542">9990 913 542</a></div></div>
+        <div class="info-item"><span class="ico">✉️</span><div><a href="mailto:info@inn10infra.com">info@inn10infra.com</a><br /><a href="mailto:gargvishalassociates@gmail.com">gargvishalassociates@gmail.com</a></div></div>
+        <div class="info-item"><span class="ico">📍</span><div>L-601, Hi Bird Block, Niho Scottish Garden, Indirapuram, Ghaziabad (U.P.) - 201014</div></div>
+      </div>
+      <form class="contact-form glass reveal" id="enquiryForm" novalidate>
+        <h3>Enquire Now</h3>
+        <input type="text" name="name" placeholder="Your Name *" required />
+        <input type="tel" name="phone" placeholder="Mobile Number *" required />
+        <select id="fProject"><option value="">Interested Project (optional)</option></select>
+        <div class="form-row">
+          <select data-extra="Budget">
+            <option value="">Budget (optional)</option>
+            <option>Under ₹ 1 Cr</option><option>₹ 1 – 2 Cr</option><option>₹ 2 – 5 Cr</option><option>₹ 5 Cr +</option>
+          </select>
+          <select data-extra="Purpose">
+            <option value="">Purpose (optional)</option>
+            <option>Self Use</option><option>Investment</option><option>Rental Income</option>
+          </select>
+        </div>
+        <textarea name="msg" rows="3" placeholder="Your requirement (size, location, timeline…)"></textarea>
+        <p class="form-msg"></p>
+        <div class="form-btns">
+          <button type="submit" class="btn btn-gold" data-via="whatsapp">Send on WhatsApp</button>
+          <button type="submit" class="btn btn-outline" data-via="email">Send Email</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/hero3d.js"></script>
+  <script src="js/tower3d.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

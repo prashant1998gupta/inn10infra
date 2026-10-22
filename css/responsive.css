@@ -1,0 +1,159 @@
+/* ==========================================================
+   Inn10 Infra – Responsive hardening (loaded LAST on every page)
+   Covers: small phones (320px) → phones landscape → tablets →
+   short laptops (768px tall) → large / 4K desktops.
+   ========================================================== */
+
+/* ---------- Global safety ---------- */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { overflow-x: hidden; }
+@supports (overflow: clip) { html, body { overflow-x: clip; } }
+img, canvas, iframe { max-width: 100%; }
+/* grid / flex children may shrink below their content width */
+.contact-wrap > *, .about-wrap > *, .pd-two > *, .pd-enquire > *, .pd-hero-grid > *, .journey-grid > *, .map-layout > * { min-width: 0; }
+/* long e-mail addresses / words wrap instead of overflowing */
+.info-item div, .info-item a, #siteFooter a, #siteFooter p, .dl-item b, .map-pop, .crumbs { overflow-wrap: anywhere; }
+.tag { font-size: .72rem; }
+
+/* ---------- Hero: never clipped, never under the header ---------- */
+.hero { height: auto; min-height: 100vh; min-height: 100svh; padding: 7.5rem 0 5rem; }
+.scroll-down { bottom: 18px; }
+
+/* ---------- Mobile menu (hamburger) up to 900px ----------
+   NOTE: backdrop-filter on #header would become the containing block
+   of the fixed full-screen #nav and squeeze it into the header strip.
+   So on these widths the blur lives on a pseudo-element instead. */
+#menuToggle { width: 44px; height: 44px; align-items: center; justify-content: center; }
+@media (max-width: 900px) {
+  #header, #header.scrolled, .page-project #header { -webkit-backdrop-filter: none; backdrop-filter: none; }
+  #header.scrolled, .page-project #header { background: transparent; }
+  #header.scrolled::before, .page-project #header::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: rgba(7, 11, 20, .9); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  }
+  body.menu-open #header::before { display: none; }
+  .nav-cta { display: none; }
+  #menuToggle { display: flex; z-index: 120; }
+  #nav { position: fixed; inset: 0; height: 100vh; height: 100dvh; background: rgba(7, 11, 20, .97); flex-direction: column; align-items: center; justify-content: center; gap: 2rem; transform: translateX(100%); transition: transform .45s; z-index: 110; }
+  #nav a { font-size: 1.4rem; }
+  body.menu-open #nav { transform: none; }
+  body.menu-open { overflow: hidden; }
+  body.menu-open #menuToggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  body.menu-open #menuToggle span:nth-child(2) { opacity: 0; }
+  body.menu-open #menuToggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+}
+
+/* ---------- 3D services tower only when there is enough room ---------- */
+@media (max-width: 899px), (max-height: 559px) {
+  .journey.has-3d { height: auto; }
+  .journey.has-3d .journey-sticky { display: none; }
+  .journey.has-3d .service-grid { display: grid; padding: 5rem 0; }
+}
+/* short desktop screens: compact the journey text */
+@media (min-width: 900px) and (max-height: 760px) {
+  .journey-text h2 { font-size: 1.9rem; margin-bottom: 1rem; }
+  .j-step { padding: .6rem 1rem; }
+  .j-step.on p { max-height: 90px; }
+  .journey-3d { height: 75vh; }
+}
+
+/* ---------- Large desktops & 4K ---------- */
+@media (min-width: 1800px) {
+  html { font-size: 17px; }
+  .container { width: min(1480px, 88%); }
+  .project-grid { grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); }
+}
+@media (min-width: 2400px) {
+  html { font-size: 19px; }
+  .container { width: min(1800px, 85%); }
+}
+
+/* ---------- Tablets (portrait & landscape) ---------- */
+@media (max-width: 1100px) {
+  #nav { gap: 1.1rem; }
+  #nav a { font-size: .85rem; }
+}
+@media (max-width: 1024px) {
+  .section { padding: 5rem 0; }
+  .about-visual { height: 380px; }
+}
+
+/* ---------- Touch devices ---------- */
+@media (hover: none) {
+  /* iOS zooms into inputs < 16px – prevent that */
+  input, select, textarea { font-size: 16px; }
+  /* no hover on touch: always show the hint & colour logos */
+  .view-hint { opacity: 1; transform: none; }
+  .logo-card img { filter: none; opacity: 1; }
+}
+/* ---------- Phones ---------- */
+@media (max-width: 820px) {
+  .hero { padding: 6.5rem 0 3.5rem; }
+  .hero h1 { font-size: clamp(2rem, 9vw, 2.8rem); }
+  .hero-sub { font-size: .95rem; }
+  .hero-stats { gap: 1.2rem; }
+  .hero-stats strong { font-size: 1.7rem; }
+  .section-head { margin-bottom: 2.2rem; }
+  .about-visual { height: 320px; }
+  .layer-back { inset: 20px 0 -12px 20px; }
+  .layer-img { inset: 0 12px 12px 0; width: calc(100% - 12px); height: calc(100% - 12px); }
+  .layer-badge { left: 8px; bottom: -14px; padding: .8rem 1rem; }
+  .contact-form, .emi-box { padding: 1.6rem 1.2rem; }
+  .testi { padding: 2.4rem 1.3rem 1.6rem; }
+  .testi p { font-size: .95rem; }
+  .carousel-stage { height: 360px; }
+  .carousel-ring { height: 300px; }
+  .float-btn { right: 14px; }
+  .float-btn.wa { bottom: calc(150px + env(safe-area-inset-bottom)); }
+  .float-btn.call { bottom: calc(88px + env(safe-area-inset-bottom)); }
+  .float-btn.top { bottom: calc(26px + env(safe-area-inset-bottom)); }
+  .m-bar { padding-bottom: env(safe-area-inset-bottom); }
+  .page-project .float-btn.top { bottom: calc(80px + env(safe-area-inset-bottom)); }
+  .heart { width: 44px; height: 44px; }
+  .chip { padding: .6rem 1rem; min-height: 40px; }
+  .pd-ctas .btn { flex: 1 1 calc(50% - .4rem); }
+  .pd-ctas .btn-gold, .pd-ctas .btn-outline { flex-basis: 100%; }
+  .pd-subnav .container { gap: 1.3rem; }
+  .pdf-bar { flex-direction: column; align-items: flex-start; }
+  .emi-chart, .emi-chart canvas { width: 190px; height: 190px; }
+  .emi-center strong { font-size: 1.25rem; }
+}
+
+/* ---------- Small phones (iPhone SE / 320–380px) ---------- */
+@media (max-width: 380px) {
+  .container { width: 94%; }
+  .logo img { height: 40px; }
+  .nav-right { gap: .35rem; }
+  .sl-btn { width: 38px; height: 38px; }
+  .hero h1 { font-size: 1.85rem; }
+  .eyebrow { letter-spacing: 2px; font-size: .72rem; }
+  .btn { padding: .75rem 1.2rem; font-size: .85rem; }
+  .p-actions .btn { flex: 1 1 100%; }
+  .project-grid { grid-template-columns: 1fr; gap: 1.4rem; }
+  .loc-card { height: 280px; }
+  .pd-intro h1 { font-size: 2rem; }
+  .facts { grid-template-columns: 1fr; }
+  .sb-tabs button { padding: .7rem; font-size: .75rem; }
+  .form-btns .btn { flex: 1 1 100%; }
+}
+
+/* ---------- Phones in landscape (short height) ---------- */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero { min-height: 0; padding: 6rem 0 3rem; }
+  .hero-stats { margin-top: 1.2rem; }
+  .scroll-down { display: none; }
+  #nav { overflow-y: auto; justify-content: flex-start; padding: 5rem 0 2rem; gap: 1.1rem; }
+  #nav a { font-size: 1.1rem; }
+  .pd-hero { min-height: 0; padding: 6rem 0 3rem; }
+  .pdf-frame { height: 90vh; }
+}
+
+/* ---------- Print: clean one-page project sheet ---------- */
+@media print {
+  #header, #siteFooter, .float-btn, .m-bar, .drawer, .drawer-bg, .toast, .pd-subnav, .pd-ctas, #pdForm, #pd-emi, #similar, .pd-map, .pd-map-actions, #preloader { display: none !important; }
+  body { background: #fff; color: #000; }
+  .pd-hero { min-height: 0; padding: 1rem 0; background: #fff; }
+  .pd-hero::after, .pd-bg { display: none; }
+  .pd-intro h1, .pd-loc { color: #000; }
+  .pd-visual { transform: none !important; }
+}
